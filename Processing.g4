@@ -33,6 +33,20 @@ activeProcessingSketch
 	:	importDeclaration* classBodyDeclaration* importDeclaration* classBodyDeclaration* EOF
 	;
 
+variableDeclaratorId
+    :   warnTypeAsVariableName
+    |   Identifier ('[' ']')*
+    ;
+
+// bug #93
+// https://github.com/processing/processing/issues/93
+// prevent from types being used as variable names
+warnTypeAsVariableName
+    :   primitiveType ('[' ']')* { 
+            notifyErrorListeners("Type names are not allowed as variable names: "+$primitiveType.text); 
+        }
+    ;
+
 // add support for converter functions int(), float(), ..
 // Only the line with "functionWithPrimitiveTypeName" was added
 // at a location before any "type" is being matched
@@ -64,6 +78,7 @@ expression
     |   expression '&&' expression
     |   expression '||' expression
     |   expression '?' expression ':' expression
+    |   warnTypeAsVariableName
     |   <assoc=right> expression
         (   '='
         |   '+='

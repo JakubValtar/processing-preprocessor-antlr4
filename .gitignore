@@ -1,3 +1,6 @@
 tmp.pde
 test*
 .DS_Store
+*.class
+*.tokens
+Processing*.java
