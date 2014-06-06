@@ -23,3 +23,6 @@ float[] myFloatArr = {
 };
 
 double myDouble = 0d;
+
+random( 0, 100.0 );
+random( .1234, 0.2e2 );
